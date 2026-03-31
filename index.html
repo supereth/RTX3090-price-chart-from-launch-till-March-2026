@@ -1,169 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RTX 3090 — Price History from Launch to March 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<div style="padding: 1rem 0;">
-  <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1.5rem;">
-    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; min-width: 110px;">
-      <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px;">MSRP launch</div>
-      <div style="font-size: 20px; font-weight: 500;">$1,499</div>
-      <div style="font-size: 11px; color: var(--color-text-secondary);">Sep 2020</div>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f5f4ef;
+      color: #1a1a1a;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: #eceae3;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      min-width: 110px;
+    }
+
+    .card-label {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 3px;
+    }
+
+    .card-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.2;
+    }
+
+    .card-value.red   { color: #c0392b; }
+    .card-value.orange{ color: #d35400; }
+    .card-value.green { color: #1e8449; }
+
+    .card-date {
+      font-size: 10.5px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      background: #fff;
+      border-radius: 10px;
+      border: 0.5px solid #dddbd3;
+      padding: 1.25rem 1rem 1rem;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 1rem;
+      font-size: 11px;
+      color: #666;
+      align-items: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-line {
+      width: 22px;
+      height: 3px;
+      background: #c0392b;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .legend-dashed {
+      width: 22px;
+      height: 0;
+      border-top: 2px dashed #999;
+      display: inline-block;
+    }
+
+    .sources {
+      margin-top: 1.5rem;
+      font-size: 10.5px;
+      color: #999;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <h1>RTX 3090 — New Unit Price History</h1>
+    <p class="subtitle">Founders Edition · Amazon / Newegg retail · September 2020 – March 2026</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">MSRP launch</div>
+        <div class="card-value">$1,499</div>
+        <div class="card-date">Sep 2020</div>
+      </div>
+      <div class="card">
+        <div class="card-label">FE peak (Pangoly)</div>
+        <div class="card-value red">$3,800</div>
+        <div class="card-date">Dec 6, 2021</div>
+      </div>
+      <div class="card">
+        <div class="card-label">ROG Strix peak</div>
+        <div class="card-value orange">$3,850</div>
+        <div class="card-date">Sep 8, 2021</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Floor (EVGA FTW3)</div>
+        <div class="card-value green">$700</div>
+        <div class="card-date">Aug 7, 2024</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Current (Amazon)</div>
+        <div class="card-value">$1,488</div>
+        <div class="card-date">Mar 2026</div>
+      </div>
     </div>
-    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; min-width: 110px;">
-      <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px;">FE peak (Pangoly)</div>
-      <div style="font-size: 20px; font-weight: 500; color: #c0392b;">$3,800</div>
-      <div style="font-size: 11px; color: var(--color-text-secondary);">Dec 6, 2021</div>
+
+    <div class="chart-wrap">
+      <canvas id="rtx3090new"></canvas>
     </div>
-    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; min-width: 110px;">
-      <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px;">ROG Strix peak</div>
-      <div style="font-size: 20px; font-weight: 500; color: #e67e22;">$3,850</div>
-      <div style="font-size: 11px; color: var(--color-text-secondary);">Sep 8, 2021</div>
+
+    <div class="legend">
+      <span class="legend-item"><span class="legend-line"></span>Founders Edition (Amazon/Newegg new)</span>
+      <span class="legend-item"><span class="legend-dashed"></span>MSRP $1,499</span>
     </div>
-    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; min-width: 110px;">
-      <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px;">Floor (EVGA FTW3)</div>
-      <div style="font-size: 20px; font-weight: 500; color: #27ae60;">$700</div>
-      <div style="font-size: 11px; color: var(--color-text-secondary);">Aug 7, 2024</div>
-    </div>
-    <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; min-width: 110px;">
-      <div style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px;">Current (Amazon)</div>
-      <div style="font-size: 20px; font-weight: 500;">$1,488</div>
-      <div style="font-size: 11px; color: var(--color-text-secondary);">Mar 2026</div>
-    </div>
+
+    <p class="sources">
+      Sources: Pangoly · bestvaluegpu.com · Tom's Hardware eBay tracker · Newegg / Amazon verified prices
+    </p>
+
   </div>
 
-  <div style="position: relative; width: 100%; height: 440px;">
-    <canvas id="rtx3090new"></canvas>
-  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+  <script>
+    const labels = [
+      "Sep'20","Oct'20","Nov'20","Dec'20",
+      "Jan'21","Feb'21","Mar'21","Apr'21","May'21","Jun'21","Jul'21","Aug'21","Sep'21","Oct'21","Nov'21","Dec'21",
+      "Jan'22","Feb'22","Mar'22","Apr'22","May'22","Jun'22","Jul'22","Aug'22","Sep'22","Oct'22","Nov'22","Dec'22",
+      "Jan'23","Feb'23","Mar'23","Apr'23","May'23","Jun'23","Jul'23","Aug'23","Sep'23","Oct'23","Nov'23","Dec'23",
+      "Jan'24","Feb'24","Mar'24","Apr'24","May'24","Jun'24","Jul'24","Aug'24","Sep'24","Oct'24","Nov'24","Dec'24",
+      "Jan'25","Feb'25","Mar'25","Apr'25","May'25","Jun'25","Jul'25","Aug'25","Sep'25","Oct'25","Nov'25","Dec'25",
+      "Jan'26","Feb'26","Mar'26"
+    ];
 
-  <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 1rem; font-size: 11px; color: var(--color-text-secondary);">
-    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 24px; height: 3px; background: #c0392b; display: inline-block; border-radius: 2px;"></span>Founders Edition (Amazon/Newegg new)</span>
-    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 24px; height: 2px; background: #7f8c8d; border-top: 2px dashed #7f8c8d; display: inline-block;"></span>MSRP $1,499</span>
-    <span>Sources: Pangoly · bestvaluegpu.com · Tom's Hardware · Newegg / Amazon verified prices</span>
-  </div>
-</div>
+    const prices = [
+      1499,1750,1950,2150,
+      2250,2450,2650,2850,3100,2950,2500,2750,3050,3200,3500,3800,
+      3400,2950,2550,2100,1800,1500,1280,1100,1000,1000,950,900,
+      875,855,840,820,805,795,785,775,770,765,760,755,
+      750,745,740,735,730,720,715,710,800,950,1100,1200,
+      1250,1300,1330,1350,1370,1390,1410,1425,1440,1455,1465,1475,
+      1478,1483,1488
+    ];
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
-<script>
-const labels = [
-  "Sep'20","Oct'20","Nov'20","Dec'20",
-  "Jan'21","Feb'21","Mar'21","Apr'21","May'21","Jun'21","Jul'21","Aug'21","Sep'21","Oct'21","Nov'21","Dec'21",
-  "Jan'22","Feb'22","Mar'22","Apr'22","May'22","Jun'22","Jul'22","Aug'22","Sep'22","Oct'22","Nov'22","Dec'22",
-  "Jan'23","Feb'23","Mar'23","Apr'23","May'23","Jun'23","Jul'23","Aug'23","Sep'23","Oct'23","Nov'23","Dec'23",
-  "Jan'24","Feb'24","Mar'24","Apr'24","May'24","Jun'24","Jul'24","Aug'24","Sep'24","Oct'24","Nov'24","Dec'24",
-  "Jan'25","Feb'25","Mar'25","Apr'25","May'25","Jun'25","Jul'25","Aug'25","Sep'25","Oct'25","Nov'25","Dec'25",
-  "Jan'26","Feb'26","Mar'26"
-];
+    const textColor  = '#444';
+    const gridColor  = 'rgba(0,0,0,0.07)';
+    const verifiedDots = [0, 12, 15, 47, 66];
 
-const prices = [
-  1499,1750,1950,2150,
-  2250,2450,2650,2850,3100,2950,2500,2750,3050,3200,3500,3800,
-  3400,2950,2550,2100,1800,1500,1280,1100,1000,1000,950,900,
-  875,855,840,820,805,795,785,775,770,765,760,755,
-  750,745,740,735,730,720,715,710,800,950,1100,1200,
-  1250,1300,1330,1350,1370,1390,1410,1425,1440,1455,1465,1475,
-  1478,1483,1488
-];
-
-const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-const textColor = isDark ? '#e0e0e0' : '#333';
-const gridColor = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
-
-const verifiedDots = [0,12,15,40,66];
-
-const annotations = {
-  msrp: {
-    type: 'line', yMin: 1499, yMax: 1499,
-    borderColor: 'rgba(120,120,120,0.45)', borderWidth: 1.2, borderDash: [5,4],
-    label: { content: 'MSRP $1,499', enabled: true, position: 'end',
-      font: { size: 10 }, color: textColor, backgroundColor: 'transparent', padding: 0 }
-  },
-  cryptoShortage: {
-    type: 'box', xMin: 3, xMax: 15,
-    backgroundColor: 'rgba(192,57,43,0.05)', borderColor: 'rgba(192,57,43,0.18)', borderWidth: 1,
-    label: { content: 'Crypto boom + chip shortage', enabled: true,
-      position: { x: 'center', y: 'start' }, font: { size: 10 }, color: '#c0392b', backgroundColor: 'transparent' }
-  },
-  julyRestock: {
-    type: 'point', xValue: "Jul'21", yValue: 2500,
-    backgroundColor: '#e67e22', radius: 5,
-    label: { content: 'NVIDIA brief MSRP restock', enabled: true,
-      position: 'top', font: { size: 9 }, color: '#e67e22', backgroundColor: 'transparent' }
-  },
-  ethMerge: {
-    type: 'line', xMin: 20, xMax: 20,
-    borderColor: 'rgba(39,174,96,0.55)', borderWidth: 1.5, borderDash: [3,3],
-    label: { content: 'ETH Merge', enabled: true, position: 'start',
-      font: { size: 9.5 }, color: '#27ae60', backgroundColor: 'transparent', rotation: -90, padding: 0 }
-  },
-  rtx40: {
-    type: 'line', xMin: 25, xMax: 25,
-    borderColor: 'rgba(52,152,219,0.55)', borderWidth: 1.5, borderDash: [3,3],
-    label: { content: 'RTX 4090 launch', enabled: true, position: 'start',
-      font: { size: 9.5 }, color: '#2980b9', backgroundColor: 'transparent', rotation: -90, padding: 0 }
-  },
-  evgaFloor: {
-    type: 'point', xValue: "Aug'24", yValue: 710,
-    backgroundColor: '#27ae60', radius: 5,
-    label: { content: 'EVGA FTW3 floor $699', enabled: true,
-      position: 'bottom', font: { size: 9 }, color: '#27ae60', backgroundColor: 'transparent' }
-  },
-  aiDemand: {
-    type: 'box', xMin: 48, xMax: 66,
-    backgroundColor: 'rgba(142,68,173,0.05)', borderColor: 'rgba(142,68,173,0.2)', borderWidth: 1,
-    label: { content: 'AI/ML demand — NOS scarcity', enabled: true,
-      position: { x: 'center', y: 'start' }, font: { size: 10 }, color: '#8e44ad', backgroundColor: 'transparent' }
-  }
-};
-
-new Chart(document.getElementById('rtx3090new'), {
-  type: 'line',
-  data: {
-    labels,
-    datasets: [{
-      label: 'New unit retail price (FE)',
-      data: prices,
-      borderColor: '#c0392b',
-      backgroundColor: 'rgba(192,57,43,0.07)',
-      borderWidth: 2.5,
-      pointRadius: prices.map((_, i) => verifiedDots.includes(i) ? 5 : 0),
-      pointBackgroundColor: prices.map((_, i) => verifiedDots.includes(i) ? '#c0392b' : 'transparent'),
-      pointBorderColor: '#c0392b',
-      fill: true,
-      tension: 0.35
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => ' $' + ctx.parsed.y.toLocaleString()
+    const annotations = {
+      msrp: {
+        type: 'line', yMin: 1499, yMax: 1499,
+        borderColor: 'rgba(120,120,120,0.4)', borderWidth: 1.2, borderDash: [5,4],
+        label: {
+          content: 'MSRP $1,499', enabled: true, position: 'end',
+          font: { size: 10, family: 'Inter' }, color: '#666',
+          backgroundColor: 'transparent', padding: 0
         }
       },
-      annotation: { annotations }
-    },
-    scales: {
-      x: {
-        ticks: {
-          color: textColor,
-          font: { size: 9.5 },
-          autoSkip: true,
-          maxTicksLimit: 18,
-          maxRotation: 45
-        },
-        grid: { color: gridColor }
+      cryptoShortage: {
+        type: 'box', xMin: 3, xMax: 15,
+        backgroundColor: 'rgba(192,57,43,0.04)',
+        borderColor: 'rgba(192,57,43,0.18)', borderWidth: 1,
+        label: {
+          content: 'Crypto boom + chip shortage', enabled: true,
+          position: { x: 'center', y: 'start' },
+          font: { size: 10, family: 'Inter' }, color: '#c0392b',
+          backgroundColor: 'transparent'
+        }
       },
-      y: {
-        min: 400,
-        max: 4200,
-        ticks: {
-          color: textColor,
-          font: { size: 10 },
-          callback: v => '$' + v.toLocaleString()
-        },
-        grid: { color: gridColor }
+      julyRestock: {
+        type: 'point', xValue: 10, yValue: 2500,
+        backgroundColor: '#d35400', radius: 5,
+        label: {
+          content: 'NVIDIA brief MSRP restock', enabled: true,
+          position: 'top', font: { size: 9, family: 'Inter' },
+          color: '#d35400', backgroundColor: 'transparent'
+        }
+      },
+      ethMerge: {
+        type: 'line', xMin: 20, xMax: 20,
+        borderColor: 'rgba(30,132,73,0.55)', borderWidth: 1.5, borderDash: [3,3],
+        label: {
+          content: 'ETH Merge', enabled: true, position: 'start',
+          font: { size: 9.5, family: 'Inter' }, color: '#1e8449',
+          backgroundColor: 'transparent', rotation: -90, padding: 0
+        }
+      },
+      rtx40: {
+        type: 'line', xMin: 25, xMax: 25,
+        borderColor: 'rgba(52,152,219,0.55)', borderWidth: 1.5, borderDash: [3,3],
+        label: {
+          content: 'RTX 4090 launch', enabled: true, position: 'start',
+          font: { size: 9.5, family: 'Inter' }, color: '#2980b9',
+          backgroundColor: 'transparent', rotation: -90, padding: 0
+        }
+      },
+      evgaFloor: {
+        type: 'point', xValue: 47, yValue: 710,
+        backgroundColor: '#1e8449', radius: 5,
+        label: {
+          content: 'EVGA FTW3 floor $699', enabled: true,
+          position: 'bottom', font: { size: 9, family: 'Inter' },
+          color: '#1e8449', backgroundColor: 'transparent'
+        }
+      },
+      aiDemand: {
+        type: 'box', xMin: 48, xMax: 66,
+        backgroundColor: 'rgba(142,68,173,0.04)',
+        borderColor: 'rgba(142,68,173,0.2)', borderWidth: 1,
+        label: {
+          content: 'AI/ML demand — NOS scarcity', enabled: true,
+          position: { x: 'center', y: 'start' },
+          font: { size: 10, family: 'Inter' }, color: '#7d3c98',
+          backgroundColor: 'transparent'
+        }
       }
-    }
-  }
-});
-</script>
+    };
+
+    new Chart(document.getElementById('rtx3090new'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'New unit retail price (FE)',
+          data: prices,
+          borderColor: '#c0392b',
+          backgroundColor: 'rgba(192,57,43,0.07)',
+          borderWidth: 2.5,
+          pointRadius: prices.map((_, i) => verifiedDots.includes(i) ? 5 : 0),
+          pointBackgroundColor: prices.map((_, i) => {
+            if (i === 47) return '#1e8449';
+            return verifiedDots.includes(i) ? '#c0392b' : 'transparent';
+          }),
+          pointBorderColor: prices.map((_, i) => {
+            if (i === 47) return '#1e8449';
+            return '#c0392b';
+          }),
+          fill: true,
+          tension: 0.35
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            titleFont: { family: 'Inter' },
+            bodyFont: { family: 'Inter' },
+            callbacks: {
+              label: ctx => ' $' + ctx.parsed.y.toLocaleString()
+            }
+          },
+          annotation: { annotations }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: '#555',
+              font: { size: 10, family: 'Inter' },
+              autoSkip: true,
+              maxTicksLimit: 18,
+              maxRotation: 45
+            },
+            grid: { color: gridColor }
+          },
+          y: {
+            min: 400,
+            max: 4200,
+            ticks: {
+              color: '#555',
+              font: { size: 10, family: 'Inter' },
+              callback: v => '$' + v.toLocaleString()
+            },
+            grid: { color: gridColor }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
